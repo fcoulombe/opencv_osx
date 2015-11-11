@@ -1,0 +1,14 @@
+# Package Information for pkg-config
+
+prefix=/Users/fcoulombe/src/opencv/build/macinstall
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir_old=${prefix}/include/opencv
+includedir_new=${prefix}/include
+
+Name: OpenCV
+Description: Open Source Computer Vision Library
+Version: 3.0.0
+Libs: -L${exec_prefix}/lib -lopencv_world
+Libs.private: -l-framework OpenCL -l-framework QTKit -l-framework QuartzCore -l-framework AppKit -l-framework Cocoa
+Cflags: -I${includedir_old} -I${includedir_new}
