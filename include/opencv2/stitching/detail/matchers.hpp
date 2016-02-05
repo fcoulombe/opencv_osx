@@ -203,6 +203,9 @@ public:
     */
     bool isThreadSafe() const { return is_thread_safe_; }
 
+
+    void setThreadSafe(bool is_thread_safe = true) { is_thread_safe_ = is_thread_safe; }
+  
     /** @brief Frees unused memory allocated before if there is any.
     */
     virtual void collectGarbage() {}
