@@ -67,6 +67,8 @@ public:
      */
     virtual void find(const std::vector<UMat> &src, const std::vector<Point> &corners,
                       std::vector<UMat> &masks) = 0;
+    virtual void findS(const std::vector<UMat> &src, const std::vector<Point> &corners,
+                      std::vector<UMat> &masks, int idxVideoFrame) = 0;
 };
 
 /** @brief Stub seam estimator which does nothing.
@@ -84,16 +86,20 @@ class CV_EXPORTS PairwiseSeamFinder : public SeamFinder
 public:
     virtual void find(const std::vector<UMat> &src, const std::vector<Point> &corners,
                       std::vector<UMat> &masks);
+    virtual void findS(const std::vector<UMat> &src, const std::vector<Point> &corners,
+        std::vector<UMat> &masks, int idxVideoFrame);
 
 protected:
-    void run();
+    void run(); // original
+    void runS(int idxVideoFrame); // give it index of video frame
+
     /** @brief Resolves masks intersection of two specified images in the given ROI.
 
     @param first First image index
     @param second Second image index
     @param roi Region of interest
      */
-    virtual void findInPair(size_t first, size_t second, Rect roi) = 0;
+    virtual void findInPair(size_t first, size_t second, Rect roi, bool kNewSeamVideo) = 0;
 
     std::vector<UMat> images_;
     std::vector<Size> sizes_;
@@ -242,7 +248,9 @@ public:
     ~GraphCutSeamFinder();
 
     void find(const std::vector<UMat> &src, const std::vector<Point> &corners,
-              std::vector<UMat> &masks);
+        std::vector<UMat> &masks);
+    void findS(const std::vector<UMat> &src, const std::vector<Point> &corners,
+              std::vector<UMat> &masks, int idxVideoFrame);
 
 private:
     // To avoid GCGraph dependency
@@ -262,14 +270,16 @@ public:
 
     void find(const std::vector<cv::UMat> &src, const std::vector<cv::Point> &corners,
               std::vector<cv::UMat> &masks);
-    void findInPair(size_t first, size_t second, Rect roi);
+    void findS(const std::vector<cv::UMat> &src, const std::vector<cv::Point> &corners,
+        std::vector<cv::UMat> &masks, int idxVideoFrame);
+    void findInPair(size_t first, size_t second, Rect roi, bool kNewSeamVideo);
 
 private:
     void setGraphWeightsColor(const cv::Mat &img1, const cv::Mat &img2, const cv::Mat &mask1, const cv::Mat &mask2,
-                              cv::Mat &terminals, cv::Mat &leftT, cv::Mat &rightT, cv::Mat &top, cv::Mat &bottom);
+                              cv::Mat &terminals, cv::Mat &leftT, cv::Mat &rightT, cv::Mat &top, cv::Mat &bottom, bool kNewSeamVideo);
     void setGraphWeightsColorGrad(const cv::Mat &img1, const cv::Mat &img2, const cv::Mat &dx1, const cv::Mat &dx2,
                                   const cv::Mat &dy1, const cv::Mat &dy2, const cv::Mat &mask1, const cv::Mat &mask2,
-                                  cv::Mat &terminals, cv::Mat &leftT, cv::Mat &rightT, cv::Mat &top, cv::Mat &bottom);
+                                  cv::Mat &terminals, cv::Mat &leftT, cv::Mat &rightT, cv::Mat &top, cv::Mat &bottom, bool kNewSeamVideo);
     std::vector<Mat> dx_, dy_;
     int cost_type_;
     float terminal_cost_;

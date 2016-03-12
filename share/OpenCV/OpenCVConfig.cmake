@@ -21,11 +21,11 @@
 #      - OpenCV_INCLUDE_DIRS             : The OpenCV include directories.
 #      - OpenCV_COMPUTE_CAPABILITIES     : The version of compute capability.
 #      - OpenCV_ANDROID_NATIVE_API_LEVEL : Minimum required level of Android API.
-#      - OpenCV_VERSION                  : The version of this OpenCV build: "3.0.0"
+#      - OpenCV_VERSION                  : The version of this OpenCV build: "3.1.0"
 #      - OpenCV_VERSION_MAJOR            : Major version part of OpenCV_VERSION: "3"
-#      - OpenCV_VERSION_MINOR            : Minor version part of OpenCV_VERSION: "0"
+#      - OpenCV_VERSION_MINOR            : Minor version part of OpenCV_VERSION: "1"
 #      - OpenCV_VERSION_PATCH            : Patch version part of OpenCV_VERSION: "0"
-#      - OpenCV_VERSION_STATUS           : Development status of this build: "-dev"
+#      - OpenCV_VERSION_STATUS           : Development status of this build: ""
 #
 #    Advanced variables:
 #      - OpenCV_SHARED                   : Use OpenCV as shared library
@@ -147,18 +147,19 @@ mark_as_advanced(FORCE OpenCV_LIB_DIR_OPT OpenCV_LIB_DIR_DBG OpenCV_3RDPARTY_LIB
 # ======================================================
 #  Version variables:
 # ======================================================
-SET(OpenCV_VERSION 3.0.0)
+SET(OpenCV_VERSION 3.1.0)
 SET(OpenCV_VERSION_MAJOR  3)
-SET(OpenCV_VERSION_MINOR  0)
+SET(OpenCV_VERSION_MINOR  1)
 SET(OpenCV_VERSION_PATCH  0)
 SET(OpenCV_VERSION_TWEAK  0)
-SET(OpenCV_VERSION_STATUS "-dev")
+SET(OpenCV_VERSION_STATUS "")
 
 # ====================================================================
 # Link libraries: e.g. opencv_core;opencv_imgproc; etc...
 # ====================================================================
 
-SET(OpenCV_LIB_COMPONENTS opencv_world;opencv_videostab;opencv_videoio;opencv_video;opencv_superres;opencv_stitching;opencv_shape;opencv_photo;opencv_objdetect;opencv_ml;opencv_imgproc;opencv_imgcodecs;opencv_highgui;opencv_hal;opencv_flann;opencv_features2d;opencv_core;opencv_calib3d)
+SET(OpenCV_LIB_COMPONENTS opencv_world;opencv_videostab;opencv_videoio;opencv_video;opencv_superres;opencv_stitching;opencv_shape;opencv_photo;opencv_objdetect;opencv_ml;opencv_imgproc;opencv_imgcodecs;opencv_highgui;opencv_flann;opencv_features2d;opencv_core;opencv_calib3d)
+list(REMOVE_ITEM OpenCV_LIB_COMPONENTS opencv_hal)
 SET(OpenCV_WORLD_COMPONENTS opencv_calib3d;opencv_core;opencv_features2d;opencv_flann;opencv_highgui;opencv_imgcodecs;opencv_imgproc;opencv_ml;opencv_objdetect;opencv_photo;opencv_shape;opencv_stitching;opencv_superres;opencv_video;opencv_videoio;opencv_videostab)
 
 # ==============================================================
